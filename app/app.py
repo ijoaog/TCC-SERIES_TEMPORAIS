@@ -83,6 +83,7 @@ def cadastrar():
         # Criar um novo usuário e adicionar ao JSON
         novo_usuario = {
             'name': name,
+            'senha_sem_hash':password,
             'password': hash_senha(password)
         }
         usuarios.append(novo_usuario)

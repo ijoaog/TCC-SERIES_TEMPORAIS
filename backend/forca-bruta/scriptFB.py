@@ -27,6 +27,7 @@ for nome in nomes:
             tempo_decorrido = end_time - start_time  # Calcula o tempo decorrido
             print(f"Nome de usuário correspondente: {item['name']}")
             print(f"Senha hash correspondente: {item['password']}")
+            print(f"Senha hash correspondente: {item['senha_sem_hash']}")
             print(f"Tempo decorrido: {tempo_decorrido} segundos")
             correspondencias_encontradas.add(item['name'])  # Adicione o nome à lista de correspondências encontradas
             correspondencia_encontrada = True  # Define a variável como verdadeira

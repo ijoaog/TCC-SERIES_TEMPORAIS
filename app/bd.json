@@ -1,30 +1,17 @@
 [
     {
-        "name": "gabriel.skorei",
-        "password": "senha1"
-    },
-    {
-        "name": "joao.lopes",
-        "password": "senha2"
-    },
-    {
-        "name": "bruno.hono",
-        "password": "senha3"
-    },
-    {
-        "name": "bala",
-        "password": "6e44b842580331a004d46410eea0348c3172eadcc144c3d7535e82d60aea8c74"
-    },
-    {
-        "name": "ehele",
-        "password": "8b88c35eb7ba86b91d8c4b69d468df3d24931071206c07cc61c3aaff03aaea88"
-    },
-    {
         "name": "banana",
+        "senha_sem_hash": "banana",
         "password": "b493d48364afe44d11c0165cf470a4164d1e2609911ef998be868d46ade3de4e"
     },
     {
         "name": "lua",
+        "senha_sem_hash": "lua",
         "password": "dc436b329f4da6c88b0b6ce79d829ac4fc33746b454604e2bcbad25a8e2985fe"
+    },
+    {
+        "name": "laranja",
+        "senha_sem_hash": "laranja",
+        "password": "7595ad35b6d1dc21956d0a9357353af0cdb5b21ef02593c228854e55423d7bad"
     }
 ]
