@@ -17,11 +17,12 @@
         }
 
         .login-container {
-            max-width: 500px; /* Aumentei a largura */
-            padding: 30px; /* Espaçamento interno maior */
+            max-width: 500px;
+            padding: 30px;
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center; /* Alinhar o texto centralmente */
         }
 
         .login-heading {
@@ -54,6 +55,19 @@
             border-color: transparent;
             color: white;
         }
+
+        /* Estilo para o botão Cadastrar */
+        .cadastrar-button {
+            background-image: linear-gradient(135deg, #27ae60, #2ecc71); /* Cor de fundo verde */
+            border-color: transparent;
+            color: white;
+            font-weight: bold;
+            margin-top: 10px; /* Espaçamento acima do botão */
+        }
+
+        .cadastrar-button:hover {
+            background-image: linear-gradient(135deg, #2ecc71, #27ae60); /* Cor de fundo verde ao passar o mouse */
+        }
     </style>
 </head>
 <body>
@@ -75,7 +89,7 @@
                 <button type="submit" class="btn btn-primary login-button">Entrar</button>
             </div>
         </form>
-        <a href="/cadastrar">Cadastrar</a>
+        <a href="/cadastrar" class="btn btn-success cadastrar-button">Cadastrar</a>
     </div>
 </body>
 </html>

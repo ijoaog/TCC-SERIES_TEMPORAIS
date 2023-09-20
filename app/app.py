@@ -40,7 +40,7 @@ def autenticar_usuario(username, password):
 
 @app.route('/')
 def index():
-    return 'Bem-vindo ao meu aplicativo Flask!'
+    return redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
