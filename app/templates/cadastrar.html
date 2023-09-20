@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Adicione as meta tags e links de estilo aqui -->
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="login-heading">Cadastrar Usuário</h1>
+        {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+        <form method="POST" action="/cadastrar">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nome de Usuário:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Senha:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-primary login-button">Cadastrar</button>
+            </div>
+        </form>
+        
+        <!-- Adicione o botão para voltar para a página de login -->
+        <div class="mb-3 text-center">
+            <a href="/login" class="btn btn-secondary">Voltar para o Login</a>
+        </div>
+    </div>
+</body>
+</html>
