@@ -1,0 +1,17 @@
+[
+    {
+        "name": "banana",
+        "senha_sem_hash": "banana",
+        "password": "b493d48364afe44d11c0165cf470a4164d1e2609911ef998be868d46ade3de4e"
+    },
+    {
+        "name": "lua",
+        "senha_sem_hash": "lua",
+        "password": "dc436b329f4da6c88b0b6ce79d829ac4fc33746b454604e2bcbad25a8e2985fe"
+    },
+    {
+        "name": "laranja",
+        "senha_sem_hash": "laranja",
+        "password": "7595ad35b6d1dc21956d0a9357353af0cdb5b21ef02593c228854e55423d7bad"
+    }
+]
