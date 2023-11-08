@@ -10,7 +10,7 @@ users = [
 
 @app.route('/')
 def index():
-    return 'Bem-vindo ao meu aplicativo Flask!'
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -32,7 +32,7 @@ def login():
 @app.route('/dashboard')
 def dashboard():
     # Lógica da outra página após o login
-    return 'Esta é a outra página após o login'
+    return render_template('dashboard.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=6060)

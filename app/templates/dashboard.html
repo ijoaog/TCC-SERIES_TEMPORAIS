@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Paleta de cores personalizada */
+        :root {
+            --cor-primaria: #3498db; /* Cor principal (azul) */
+            --cor-secundaria: #e74c3c; /* Cor secundária (vermelha) */
+            --cor-chamativa: #f39c12; /* Cor chamativa (amarelo) */
+            --cor-gradiente: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); /* Gradiente de cores */
+        }
+
+        /* Estilo personalizado para a página de dashboard */
+        body, html {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dashboard-container {
+            width: 90%;
+            height: 90%;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .dashboard-heading {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .grafico-container {
+            flex: 1;
+            width: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .indic-container {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .form-check {
+            margin-bottom: 10px;
+        }
+
+        .log-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--cor-primaria);
+            padding: 10px;
+            overflow-y: scroll;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .log-text {
+            color: var(--cor-primaria);
+        }
+
+        .result-container {
+            height: 20%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-log {
+            flex: 1;
+            background-color: aliceblue;
+            padding: 2;
+            margin: 3;
+            border-radius: 10px;
+        }
+
+        .result-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30%;
+            background: var(--cor-gradiente);
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .result-button:hover {
+            background: var(--cor-secundaria);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <h1 class="dashboard-heading">Dashboard</h1>
+        <div style="display: flex;">
+            <div class="grafico-container">
+                GRAFICO
+            </div>
+            <div class="indic-container">
+                <h2>Indicadores</h2>
+                <!-- Checkbox 1 -->
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="checkbox1">
+                    <label class="form-check-label" for="checkbox1">Checkbox 1</label>
+                </div>
+                <!-- Checkbox 2, 3, 4 (adicione mais, se necessário) -->
+                <!-- Checkbox 2 -->
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="checkbox2">
+                    <label class="form-check-label" for="checkbox2">Checkbox 2</label>
+                </div>
+                <!-- Checkbox 3 -->
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="checkbox3">
+                    <label class="form-check-label" for="checkbox3">Checkbox 3</label>
+                </div>
+                <!-- Checkbox 4 -->
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="checkbox4">
+                    <label class="form-check-label" for="checkbox4">Checkbox 4</label>
+                </div>
+            </div>
+        </div>
+        <div class="result-container">
+            <div class="result-log">
+                <!-- Janela de log (você pode usar um elemento <div> ou <textarea> para exibir o log) -->
+                <p class="log-text">Erros...</p>
+            </div>
+            <button onclick="alert('VOCÊ É MUITO MI AMORE, SABIA?');" class="result-button">Avaliar</button>
+        </div>
+    </div>
+</body>
+
+</html>
