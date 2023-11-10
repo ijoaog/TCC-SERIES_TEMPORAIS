@@ -1,3 +1,4 @@
+import mpld3
 import numpy as np
 import datetime
 import pandas as pd
@@ -14,6 +15,8 @@ start_date = "2022-11-08"
 end_date = "2023-11-08"
 ticker = 'AAPL'
 
+nasdaq_tickers = yf.download('^.IXIC').index
+print(nasdaq_tickers[:20])
 # Coleta de dados
 data = wb.get_data_yahoo(ticker, start=start_date, end=end_date)
 print(data)
@@ -182,3 +185,46 @@ print("Preços previstos para os próximos 10 dias (sem indicadores):")
 for date, price in zip(forecasted_dates, forecasted_prices_no_indicators[-10:]):
     print(f"Data: {date.date()}, Preço previsto: {price:.2f}")
 
+plt.figure(figsize=(12, 6))
+plt.title("Preços Previstos para os Próximos 10 Dias (Com Indicadores)")
+plt.xlabel("Data")
+plt.ylabel("Preço Previsto")
+plt.plot(forecasted_dates, forecasted_prices[-10:], label="Com Indicadores", marker='o', color="blue")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Plot the results for the next 10 days without indicators
+plt.figure(figsize=(12, 6))
+plt.title("Preços Previstos para os Próximos 10 Dias (Sem Indicadores)")
+plt.xlabel("Data")
+plt.ylabel("Preço Previsto")
+plt.plot(forecasted_dates, forecasted_prices_no_indicators[-10:], label="Sem Indicadores", marker='o', color="orange")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+def generate_stock_prediction_plot(data, split_index):
+    # Plot the results for the prediction data
+    plt.figure(figsize=(12, 6))
+    plt.title(f"Preço das Ações da Apple - Comparação de Previsão com e sem Indicadores (RSI, SMA, MFI e Estocástico)")
+    plt.xlabel("Tempo")
+    plt.ylabel(f"Preço das Ações da Apple")
+
+    # Linha de preço real
+    plt.plot(data.index[split_index+1:], y_test, label="Real (Previsão)", color="green")
+
+    # Linha de previsão com indicadores de momentum (RSI, SMA, MFI e Estocástico)
+    plt.plot(data.index[split_index+1:], predicted_prediction_with_indicators, label="Previsão (RSI, SMA, MFI e Estocástico)", color="blue")
+
+    # Linha de previsão sem indicadores
+    plt.plot(data.index[split_index+1:], predicted_prediction_no_indicators, label="Previsão (Sem Indicadores)", color="orange")
+
+    plt.legend(["Real", "RSI, SMA, MFI e Estocástico", "Sem Indicadores"])
+    plt.grid(True)
+
+    # Salvar a figura como uma imagem
+    plt.savefig("./../app/stock_prediction_plot.png")
+
+# Chamar a função para gerar o gráfico
+generate_stock_prediction_plot(data, split_index)

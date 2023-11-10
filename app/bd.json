@@ -13,5 +13,9 @@
         "name": "laranja",
         "senha_sem_hash": "laranja",
         "password": "7595ad35b6d1dc21956d0a9357353af0cdb5b21ef02593c228854e55423d7bad"
+    },
+    {
+        "name": "bile",
+        "password": "bb3be5d12d4e85f6a02c454e868f16c3050a54f648a073d4c099976e5b14b8e9"
     }
 ]

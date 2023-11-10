@@ -20,14 +20,6 @@ class Usuario:
         self.username = username
         self.password = password
 
-# Lista de usuários com senhas hashadas (opcional)
-# Usaremos os usuários do JSON em vez disso.
-# usuarios = [
-#     Usuario('usuario1', hash_senha('senha1')),
-#     Usuario('usuario2', hash_senha('senha2')),
-#     Usuario('usuario3', hash_senha('senha3')),
-# ]
-#hash_senha(password)
 def autenticar_usuario(username, password):
     for usuario in usuarios:
         if usuario['name'] == username and usuario['password'] == hash_senha(password):
@@ -56,10 +48,35 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/home')
+@app.route('/dashboard')
 def home():
     # Lógica da outra página após o login
     return render_template('dashboard.html')
 
+
+@app.route('/cadastrar', methods=['GET', 'POST'])
+def cadastrar():
+    if request.method == 'POST':
+        # Obtenha os dados do formulário
+        username = request.form.get('name')
+        password = request.form.get('password')
+
+        # Verifique se o usuário já existe
+        if any(usuario['name'] == username for usuario in usuarios):
+            error_message = "Este nome de usuário já está em uso."
+            return render_template('cadastrar.html', error_message=error_message)
+
+        # Adicione o novo usuário ao arquivo JSON
+        new_user = {'name': username, 'password': hash_senha(password)}
+        usuarios.append(new_user)
+
+        with open('bd.json', 'w') as json_file:
+            json.dump(usuarios, json_file, indent=4)
+
+        # Redirecione para a página de login após o cadastro bem-sucedido
+        return redirect(url_for('login'))
+
+    # Se o método for GET, simplesmente renderize a página de cadastro
+    return render_template('cadastrar.html')
 if __name__ == '__main__':
     app.run(debug=True, port=6060)
