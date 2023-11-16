@@ -1,6 +1,8 @@
-from flask import Flask, jsonify, make_response, render_template, request, redirect, url_for
-import hashlib
+from flask import Flask, render_template, request, redirect, url_for
 import json
+import hashlib
+from flask import jsonify
+from ModeloRegreLinear import resultado_analise;
 
 app = Flask(__name__)
 
@@ -10,7 +12,7 @@ def hash_senha(password):
     senha_hash = hash_obj.hexdigest()
     return senha_hash
 
-# Carregue os usuários do arquivo JSON
+# Carregue os usuários do arquivo JSON (se for um novo arquivo, mantenha esta parte separada)
 with open('bd.json', 'r') as json_file:
     usuarios = json.load(json_file)
 
@@ -26,13 +28,19 @@ def autenticar_usuario(username, password):
             return True
     return False
 
-# Resto do seu código permanece o mesmo
-
-
-
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    return render_template('index.html')
+
+@app.route('/enviar_variavel', methods=['POST'])
+def enviar_variavel():
+    dados = request.get_json()
+    print(dados)
+    variavel_acao = dados['acao']
+    com_indicador = dados['checkbox1']
+    # Chama a função do ModeloRegre.py com o valor do ticker
+    resultado = resultado_analise(variavel_acao,com_indicador)  # Esta função deve retornar os resultados da análise
+    return jsonify(resultado)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

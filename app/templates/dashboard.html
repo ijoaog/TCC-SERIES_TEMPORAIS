@@ -2,25 +2,35 @@
 <html lang="en">
 
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Dashboard</title>
+    <title>Análise de Ações</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Paleta de cores personalizada */
         :root {
-            --cor-primaria: #3498db; /* Cor principal (azul) */
-            --cor-secundaria: #e74c3c; /* Cor secundária (vermelha) */
-            --cor-chamativa: #f39c12; /* Cor chamativa (amarelo) */
-            --cor-gradiente: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); /* Gradiente de cores */
+            --cor-primaria: #3498db;
+            /* Azul */
+            --cor-secundaria: #e74c3c;
+            /* Vermelho */
+            --cor-chamativa: #f39c12;
+            /* Amarelo */
+            --cor-gradiente: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+            /* Gradiente de cores */
         }
 
         /* Estilo personalizado para a página de dashboard */
-        body, html {
+        body,
+        html {
             height: 100%;
             width: 100%;
             margin: 0;
             padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            font-size: 8;
         }
 
         body {
@@ -46,71 +56,101 @@
         .dashboard-heading {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 28px;
+            color: black;
         }
 
-        .grafico-container {
+        .chart-container {
             flex: 1;
-            width: 80%;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-bottom: 20px;
         }
 
+        .selecao-acao,
         .indic-container {
-            width: 20%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+            width: 100%;
+            margin-bottom: 20px;
         }
 
-        .form-check {
+        .selecao-acao label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 18px;
+            color: black;
+        }
+
+        #acoes {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid var(--cor-primaria);
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
             margin-bottom: 10px;
         }
 
-        .log-container {
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid var(--cor-primaria);
-            padding: 10px;
-            overflow-y: scroll;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .log-text {
-            color: var(--cor-primaria);
-        }
-
-        .result-container {
-            height: 20%;
-            width: 100%;
+        .indic-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .result-log {
-            flex: 1;
-            background-color: aliceblue;
-            padding: 2;
-            margin: 3;
+        .form-check {
+            width: 18%;
+            margin-bottom: 10px;
+        }
+
+        .log-container {
+            width: 65%;
+            /* Aumentei o width para 65% */
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--cor-primaria);
+            padding: 15px;
+            overflow-y: scroll;
             border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-height: 200px;
+        }
+
+        .log-text {
+            color: black;
+            margin: 0;
+        }
+
+        .result-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            /* Distribuir os elementos com espaço entre eles */
+            align-items: center;
+            /* Centralizar verticalmente */
+        }
+
+        .log-container {
+            flex: 1;
+            overflow-y: auto;
+            background-color: aliceblue;
+            padding: 5px;
+            border-radius: 10px;
+            margin-right: 10px;
+            /* Adicionado para dar espaço entre .log-container e .result-button */
         }
 
         .result-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 30%;
+            width: 150px;
+            height: 50px;
             background: var(--cor-gradiente);
             color: white;
-            font-size: 16px;
-            padding: 10px 20px;
+            font-size: 18px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
+            font-size: 24px;
         }
 
         .result-button:hover {
@@ -121,44 +161,171 @@
 
 <body>
     <div class="dashboard-container">
-        <h1 class="dashboard-heading">Dashboard</h1>
-        <div style="display: flex;">
-            <div class="grafico-container">
-                <img src="stock_prediction_plot.png" alt="Gráfico de Previsão de Ações">
+        <h1 class="dashboard-heading">Análise de Ações</h1>
+        <div class="chart-container">
+            <canvas id="stockChart" style="max-width: 100%; display: block;"></canvas>
+            <div id="loadingIcon" class="spinner-border text-primary" role="status" style="display: none;">
+                <span class="visually-hidden">Carregando...</span>
             </div>
-            <div class="indic-container">
-                <h2>Indicadores</h2>
-                <!-- Checkbox 1 -->
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="checkbox1">
-                    <label class="form-check-label" for="checkbox1">BASEADO EM VOLUME</label>
-                </div>
-                <!-- Checkbox 2, 3, 4 (adicione mais, se necessário) -->
-                <!-- Checkbox 2 -->
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="checkbox2">
-                    <label class="form-check-label" for="checkbox2">BASEADO EM OSCILADORES</label>
-                </div>
-                <!-- Checkbox 3 -->
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="checkbox3">
-                    <label class="form-check-label" for="checkbox3">BASEADO MOMENTUM</label>
-                </div>
-                <!-- Checkbox 4 -->
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="checkbox4">
-                    <label class="form-check-label" for="checkbox4">BASEADO EM TENDENCIAS</label>
-                </div>
+        </div>
+        <div class="selecao-acao">
+            <label for="acoes">Escolha uma ação:</label>
+            <select id="acoes" name="acao">
+                <option value="AAPL">AAPL (Apple Inc.)</option>
+                <option value="TSLA">TSLA (Tesla Inc.)</option>
+                <option value="AMD">Advanced Micro Devices Inc (AMD)</option>
+                <option value="VALE3.SA">Vale SA (VALE3)</option>
+            </select>
+        </div>
+        <div class="indic-container">
+            <h2>Indicadores</h2>
+            <!-- Checkbox 1 -->
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="checkbox1">
+                <label class="form-check-label" for="checkbox1">Ativar Indicadores</label>
             </div>
         </div>
         <div class="result-container">
-            <div class="result-log">
+            <div class="log-container">
                 <!-- Janela de log (você pode usar um elemento <div> ou <textarea> para exibir o log) -->
-                <p class="log-text">Erros...</p>
+                <p class="log-text" id="resultMetrics"></p>
             </div>
-            <button onclick="alert('');" class="result-button">Avaliar</button>
+            <button onclick="enviarVariavel()" class="result-button">Avaliar</button>
         </div>
     </div>
+    <script>
+        let myChart; // Declarando myChart no escopo global
+        function enviarVariavel() {
+            var acaoSelecionada = document.getElementById('acoes').value;
+            // Obtendo os valores dos checkboxes
+            var checkbox1 = document.getElementById('checkbox1').checked;
+            // Exibe o ícone de carregamento e oculta o gráfico
+            document.getElementById('stockChart').style.display = 'none';
+            document.getElementById('loadingIcon').style.display = 'block';
+
+            fetch('/enviar_variavel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    acao: acaoSelecionada,
+                    checkbox1: checkbox1,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Oculta o ícone de carregamento
+                    document.getElementById('loadingIcon').style.display = 'none';
+
+                    // Renderiza ou atualiza o gráfico com os dados recebidos
+                    renderizarGrafico(data);
+                })
+                .catch(error => {
+                    console.error('Ocorreu um erro:', error);
+                    // Em caso de erro, também é bom reexibir o gráfico e ocultar o ícone de carregamento
+                    document.getElementById('stockChart').style.display = 'block';
+                    document.getElementById('loadingIcon').style.display = 'none';
+                });
+        }
+
+        function renderizarGrafico(data) {
+            var ctx = document.getElementById('stockChart').getContext('2d');
+
+            // Verifica se o gráfico existe e está visível
+            if (myChart && document.getElementById('stockChart').offsetParent !== null) {
+                myChart.destroy(); // Destruir o gráfico existente se estiver visível
+            }
+
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['17-11-2023', '18-11-2023', '19-11-2023', '20-11-2023', '21-11-2023'],
+                    datasets: [{
+                        label: 'Valor da Ação',
+                        data: [data.lista_predicao[0], data.lista_predicao[1], data.lista_predicao[2], data.lista_predicao[3], data.lista_predicao[4]],
+                        borderColor: 'black',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'black',
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tempo',
+                                color: 'black'
+                            },
+                            ticks: {
+                                color: 'black'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Valor',
+                                color: 'black',
+                                fontSize: 30
+                            },
+                            ticks: {
+                                color: 'black',
+                                fontSize: 30
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gráfico de Linha',
+                            padding: {
+                                top: 10,
+                                bottom: 30
+                            },
+                            color: 'black'
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: 'black'
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function (context) {
+                                    var label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toFixed(2); // Exibe o valor com duas casas decimais
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: true,
+                            color: 'black',
+                            font: {
+                                size: 12 // Define o tamanho da fonte dos rótulos
+                            },
+                            formatter: function (value) {
+                                return value.toFixed(2); // Formata os valores exibidos nos rótulos (com duas casas decimais)
+                            }
+                        }
+                    }
+                }
+            });
+            // Exibindo as métricas
+            var metricsData = `MSE: ${data.MSE}, MAE: ${data.MAE}, RMSE: ${data.RMSE}, MAPE: ${data.MAPE}`;
+            document.getElementById('resultMetrics').textContent = metricsData;
+        }
+    </script>
 </body>
 
 </html>
